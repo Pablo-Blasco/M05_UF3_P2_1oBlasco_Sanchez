@@ -37,7 +37,7 @@ namespace M05_UF3_P2_Template.App_Code.Model
             CIF = row[4].ToString();
             Address = row[5].ToString();
             Web = row[6].ToString();
-            Email = row[8].ToString();
+            Email = row[7].ToString();
         }
         public Company(int Id) : this(DatabaseManager.Select("Company", null, "Id = " + Id + " ").Rows[0]) { }
 
