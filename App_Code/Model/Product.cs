@@ -19,7 +19,9 @@ namespace M05_UF3_P2_Template.App_Code.Model
         public DateTime Publishing { get; set; }
         public float Size { get; set; }
         public int Developer_id { get; set; }
+        public Company Developer { get; set; }
         public int Editor_id { get; set; }
+        public Company Editor { get; set; }
 
         public Product()
         {
@@ -27,6 +29,11 @@ namespace M05_UF3_P2_Template.App_Code.Model
         }
 
         public Product(DataRow row)
+        {
+            Fill(row);
+        }
+        public Product(int Id) : this(DatabaseManager.Select("Product", null, "Id = " + Id + " ").Rows[0]) { }
+        public void Fill(DataRow row)
         {
             try
             {
@@ -80,6 +87,10 @@ namespace M05_UF3_P2_Template.App_Code.Model
             {
                 Size = 0;
             }
+            if (Developer_id > 0)
+            {
+                Developer = new Company(Developer_id);
+            }
             try
             {
                 Editor_id = (int)row[10];
@@ -88,8 +99,11 @@ namespace M05_UF3_P2_Template.App_Code.Model
             {
                 Size = 0;
             }
+            if (Editor_id > 0)
+            {
+                Editor = new Company(Editor_id);
+            }
         }
-        public Product(int Id) : this(DatabaseManager.Select("Product", null, "Id = " + Id + " ").Rows[0]) { }
 
         public bool Update()
         {
@@ -107,6 +121,31 @@ namespace M05_UF3_P2_Template.App_Code.Model
                 new DatabaseManager.DB_Field("Editor", Editor_id)
             };
             return DatabaseManager.Update("Product", fields, "Id = " + Id + " ") > 0 ? true : false;
+        }
+        public bool Add()
+        {
+            DatabaseManager.DB_Field[] fields = new DatabaseManager.DB_Field[]
+            {
+                new DatabaseManager.DB_Field("Type", (int)Type),
+                new DatabaseManager.DB_Field("Summary", Summary),
+                new DatabaseManager.DB_Field("Icon", Icon),
+                new DatabaseManager.DB_Field("Banner", Banner),
+                new DatabaseManager.DB_Field("Trailer", Trailer),
+                new DatabaseManager.DB_Field("Price", Price),
+                //new DatabaseManager.DB_Field("Publishing", Publishing),
+                new DatabaseManager.DB_Field("Size", Size),
+                new DatabaseManager.DB_Field("Developer", Developer_id),
+                new DatabaseManager.DB_Field("Editor", Editor_id)
+            };
+            return DatabaseManager.Insert("Product", fields) > 0 ? true : false;
+        }
+        public bool Remove()
+        {
+            return Remove(Id);
+        }
+        public static bool Remove(int id)
+        {
+            return DatabaseManager.Delete("Product", id) > 0 ? true : false;
         }
     }
 }
