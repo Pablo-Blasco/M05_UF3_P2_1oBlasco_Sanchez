@@ -2,7 +2,90 @@
 @model M05_UF3_P2_Template.Pages.Products.ProductModel
 @using M05_UF3_P2_Template.App_Code.Model
 @{
+    if (Model.Id > 0)
+    {
+        ViewData["Title"] = "Product - " + Model.product.Id;
+    }
+    else
+    {
+        ViewData["Title"] = "Product - Create";
+    }
 }
+
+<form method="post">
+    <button type="submit" class="btn btn-primary float-right"><span class="material-icons">save</span></button>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">
+                @if (Model.Id > 0)
+                {
+                    <img class="img img-thumbnail img-fluid" src="@Model.product.Icon" style="width: 200px; height: 100px; object-fit: scale-down; background-color:@Model.product.Icon;" />
+                    <span>@Model.product.Summary - <small>Edit Product</small></span>
+                }
+                else
+                {
+                    <span>Create product</span>
+                }
+                <button type="submit" class="btn btn-primary float-right"><span class="material-icons">save</span></button>
+            </h1>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="Product_Id_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">tag</span>Id</label>
+                    @{
+                        string CustomId = Model.Id > 0 ? Model.Id.ToString() : null;
+                    }
+                    <input type="text" asp-for="product.Id" value="@CustomId" readonly class="form-control" id="Product_Summary_Input" placeholder="Id">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Type_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Type</label>
+                    <input type="text" asp-for="product.Type" maxlength="50" class="form-control" id="Product_Type_Input" placeholder="Type">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Summary_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Summary</label>
+                    <input type="text" asp-for="product.Summary" maxlength="50" class="form-control" id="Product_Summary_Input" placeholder="Summary">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Icon_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Icon</label>
+                    <input type="text" asp-for="product.Icon" maxlength="50" class="form-control" id="Product_Icon_Input" placeholder="Icon">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Banner_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Banner</label>
+                    <input type="text" asp-for="product.Banner" maxlength="50" class="form-control" id="Product_Banner_Input" placeholder="Banner">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Trailer_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Trailer</label>
+                    <input type="text" asp-for="product.Trailer" maxlength="50" class="form-control" id="Product_Trailer_Input" placeholder="Trailer">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Price_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Price</label>
+                    <input type="number" asp-for="product.Price" maxlength="50" class="form-control" id="Product_Price_Input" placeholder="Price">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Publishing_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Publishing</label>
+                    <input type="datetime" asp-for="product.Publishing" maxlength="50" class="form-control" id="Product_Publishing_Input" placeholder="Publishing">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Size_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Size</label>
+                    <input type="number" asp-for="product.Size" maxlength="50" class="form-control" id="Product_Size_Input" placeholder="Size">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Product_Developer_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">badge</span>Developer</label>
+                    <input type="number" asp-for="product.Developer" maxlength="50" class="form-control" id="Product_Developer_Input" placeholder="Developer">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Product_Editor_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">home</span>Editor</label>
+                <input type="number" asp-for="product.Editor_id" maxlength="2048" class="form-control" id="Product_Editor_Input" placeholder="Editor">
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary float-right" asp-page="/Products/Game" asp-route-id="@Model.Game_Id" title="Edit game">
+        <span class="material-icons text-white">edit</span>
+    </a>
+</form>
 
 <form method="post">
     <button type="submit" class="btn btn-primary float-right"><span class="material-icons">save</span></button>
@@ -11,7 +94,5 @@
     <input type="number" asp-for="product.Developer_id" />
     <input type="number" asp-for="product.Editor_id" />
 
-    <a class="btn btn-primary float-right" asp-page="/Products/Game" asp-route-id="@Model.Game_Id" title="Edit game">
-        <span class="material-icons text-white">edit</span>
-    </a>
+    
 </form>

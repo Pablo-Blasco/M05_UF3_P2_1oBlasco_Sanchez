@@ -1,0 +1,62 @@
+﻿@page
+@model M05_UF3_P2_Template.Pages.Games.GameModel
+@using M05_UF3_P2_Template.App_Code.Model
+
+@{
+    if (Model.Id > 0)
+    {
+        ViewData["Title"] = "Game - " + Model.Id;
+    }
+    else
+    {
+        ViewData["Title"] = "Game - Create";
+    }
+}
+
+<form method="post">
+
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">
+                @if (Model.Id > 0)
+                {
+                    <img class="img img-thumbnail img-fluid" src="@Model.game.Id" style="width: 200px; height: 100px; object-fit: scale-down " />
+                    <span>@Model.game.Id - <small>Edit Game</small></span>
+                }
+                else
+                {
+                    <span>Create Game</span>
+                }
+                <button type="submit" class="btn btn-primary float-right"><span class="material-icons">save</span></button>
+
+            </h1>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="Game_Id_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">tag</span>Id</label>
+                    @{
+                        string CustomId = Model.Id > 0 ? Model.Id.ToString() : null;
+                        string ProductCustomId = Model.Product_Id.ToString();
+                    }
+                    <input type="number" asp-for="game.Id" value="@CustomId" readonly class="form-control" id="Game_Id_Input" placeholder="Id">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Game_Product_Id_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Product_Id</label>
+                    <input type="number" asp-for="game.Product_Id" value="@ProductCustomId" maxlength="50" class="form-control" id="Game_Product_Id_Input" placeholder="Product_Id">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Game_Rating_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">business</span>Rating</label>
+                    <input type="number" asp-for="game.Rating" maxlength="50" class="form-control" id="Game_Rating_Input" placeholder="Rating">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="Game_Version_Input col-sm-2 col-form-label"><span class="material-icons mx-1" style="font-size: 1rem;">badge</span>Version</label>
+                    <input type="text" asp-for="game.Version" maxlength="50" class="form-control" id="Game_Version_Input" placeholder="Version">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</form>

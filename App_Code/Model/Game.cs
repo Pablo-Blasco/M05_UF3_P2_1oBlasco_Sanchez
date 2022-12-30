@@ -8,17 +8,18 @@ namespace M05_UF3_P2_Template.App_Code.Model
 {
     public class Game
     {
-        public int Id;
-        public int Product_Id;
-        public Product product;
-        public float Rating;
-        public string Version;
+        public int Id { get; set; }
+        public int Product_Id { get; set; }
+        public Product product { get; set; }
+        public float Rating { get; set; }
+         public string Version { get; set; }
 
-        public Game()
+
+    public Game()
         {
 
         }
-        public Game(DataRow row)
+    public Game(DataRow row)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace M05_UF3_P2_Template.App_Code.Model
 
             if(Product_Id > 0)
             {
-                product = new Product(DatabaseManager.Select("Product", null, "Id = " + Product_Id + " ").Rows[0]);
+                product = new Product( DatabaseManager.Select("Product", null, "Id = " + Product_Id + " ").Rows[0]);
             }
 
         }
@@ -63,7 +64,7 @@ namespace M05_UF3_P2_Template.App_Code.Model
                 new DatabaseManager.DB_Field("Rating", Rating),
                 new DatabaseManager.DB_Field("Version", Version)
             };
-            return DatabaseManager.Update("Game", fields, "Id = " + Id + " ") > 0 ? true : false;
+            return DatabaseManager.Update("Game", fields, "Id = " + Id + " ") > 0;
         }
         public bool Add()
         {
@@ -74,6 +75,14 @@ namespace M05_UF3_P2_Template.App_Code.Model
                 new DatabaseManager.DB_Field("Version", Version)
             };
             return DatabaseManager.Insert("Game", fields) > 0 ? true : false;
+        }
+        public bool Remove()
+        {
+            return Remove(Id);
+        }
+        public static bool Remove(int id)
+        {
+            return DatabaseManager.Delete("Game", id) > 0 ? true : false;
         }
     }
 }

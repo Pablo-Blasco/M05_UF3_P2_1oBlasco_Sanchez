@@ -21,6 +21,7 @@ public static class DatabaseManager
         /// <param name="_value">Value</param>
         public DB_Field(string _field, object _value)
         {
+            
             field = _field;
             value = _value;
         }

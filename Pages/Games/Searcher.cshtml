@@ -1,0 +1,40 @@
+﻿@page
+@model M05_UF3_P2_Template.Pages.Games.SearcherModel
+@using M05_UF3_P2_Template.App_Code.Model
+@{
+}
+
+<a class="btn btn-primary float-right" asp-page="/Games/Game" title="Add game">
+    <span class="material-icons text-white">add</span>
+</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product_Id</th>
+            <th>Rating</th>
+            <th>Version</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Game item in Model.games)
+        {
+            <tr>
+               
+                <td>@item.Id</td>
+                <td>@item.Product_Id.ToString()</td>
+                <td>@item.Rating.ToString()</td>
+                <td>@item.Version.ToString()</td>
+                <td>
+                    <form asp-page-handler="delete" asp-route-id="@item.Id" method="post">
+                        <a class="btn btn-primary" asp-page="/Games/Game" asp-route-id="@item.Id" title="View product">
+                            <span class="material-icons text-white">visibility</span>
+                        </a>
+                        <button class="btn btn-danger"><span class="material-icons text-white">delete</span></button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
